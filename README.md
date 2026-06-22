@@ -45,3 +45,25 @@ By analyzing the correlation between the target variable and the input features,
 
 Real-World Takeaway: While the model successfully identifies the mathematical drivers of a tip, the overall $R^2$ remains relatively low (~0.03). This is highly expected in behavioral data science; human tipping habits are influenced by subjective factors (mood, service quality, cash vs. card) that are not captured in the TLC trip metadata.
 
+Further Explanation of the Exercise
+
+The Problem: 
+Unlike your previous project where we predicted which drug a patient would take (Classification), this project tackles a Regression problem: predicting a continuous number. Specifically, we want to predict the exact dollar amount a passenger will tip a NYC taxi driver based on the details of their trip. 
+
+The Approach: 
+I used a Decision Tree Regressor. While a classification tree ends its leaves with a "majority vote," a regression tree ends its leaves with the average value of the tips for all the trips that landed in that specific leaf. To build the tree, it uses Mean Squared Error (MSE) to find the splits that group similar tip amounts together.
+
+The Data & Preprocessing:
+I used the real-world NYC TLC (Taxi & Limousine Commission) yellow taxi dataset. 
+
+    Cleaning: I dropped irrelevant categorical and ID columns (like VendorID and payment_type) that don't mathematically help predict the tip size.
+    Scaling: I applied L1 Normalization to the feature matrix. This ensures that features with massive numbers (like total fare) don't unfairly dominate features with smaller numbers during the splitting process.
+
+The Results & (Hyperparameter Tuning):
+The most valuable part of this exercise was experimenting with the tree's max_depth (how many questions it's allowed to ask) and observing the MSE and R^2 (R-squared) scores.
+    Depth 8 (Baseline): The model achieved an MSE of ~24.5 and an R^2 of 0.028. 
+    Depth 12 (Overfitting): I thought a deeper tree would be better, so I increased the depth to 12. Surprisingly, the MSE increased to 26.8, and the R^2 dropped to a negative number (-0.064). A negative R^2 means the model is literally performing worse than if it just guessed the average tip for every single person! The tree had memorized the training data (overfitting) and failed to generalize.
+    Depth 4 (The Sweet Spot): By restricting the tree to a depth of 4, the MSE dropped to 24.4 and the R^2 improved to 0.031. The simpler tree generalized much better to unseen data.
+
+Key Insight:
+I also ran a correlation analysis and found that the Fare Amount, Tolls Amount, and Trip Distance are the strongest mathematical predictors of how much a passenger will tip. However, because human tipping behavior is highly subjective and volatile, the overall R^2 remains relatively low—a very realistic outcome in real-world behavioral data science.
