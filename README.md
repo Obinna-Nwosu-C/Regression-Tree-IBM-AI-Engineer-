@@ -97,4 +97,4 @@ The Reality Check (MSE & R^2)
 It is also important to remember the evaluation metrics from your exercise. The optimal model (Depth 4) yielded an R^2 score of roughly 0.03 and an MSE of ~24.4. 
 This means that while the model will output an exact dollar amount (e.g., "$8.42"), human tipping behavior is so subjective and volatile that this exact prediction will likely have a margin of error of several dollars. The model provides the best statistical estimate based on the fare and distance, but it cannot perfectly predict the exact change a specific passenger will decide to leave.
 
-
+Course Participant/Code Executor: Obinna Nwosu C, Author: Jeff Grossman, Other Contributor(s): Abhishek Gagneja, © IBM Corporation. All rights reserved.
