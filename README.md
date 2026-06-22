@@ -67,3 +67,34 @@ The most valuable part of this exercise was experimenting with the tree's max_de
 
 Key Insight:
 I also ran a correlation analysis and found that the Fare Amount, Tolls Amount, and Trip Distance are the strongest mathematical predictors of how much a passenger will tip. However, because human tipping behavior is highly subjective and volatile, the overall R^2 remains relatively low—a very realistic outcome in real-world behavioral data science.
+
+Based on the notebook and the nature of the model trained, there is no single, fixed exact dollar amount that the model predicts for every passenger. 
+Because this is a Regression Tree, the predicted tip is dynamic. It changes on a case-by-case basis depending entirely on the specific details of that individual trip.
+Here is how the model determines the "exact" amount for a specific passenger:
+
+1. It looks at the specific trip details
+When a new trip comes in, the model looks at the specific numerical values for the features you kept in the dataset, primarily:
+
+    Fare Amount (The strongest predictor)
+    Tolls Amount
+    Trip Distance
+
+2. It travels down the tree
+The model uses those specific numbers to answer a series of Yes/No questions (the splits) that it learned during training. For example: "Is the fare amount greater than $50?" -> "Are there tolls?" -> "Is the distance greater than 10 miles?"
+
+3. It outputs the Leaf Node Average
+Once the trip's details filter all the way down to a final Leaf Node, the model looks at all the historical trips in your training data that ended up in that exact same leaf. It calculates the mathematical average (mean) of their actual tips, and outputs that as the exact predicted dollar amount.
+
+Examples from your dataset:
+If you look at the raw data provided in your notebook, the actual historical tips (tip_amount) vary wildly based on the trip. In just the first few rows of your data, the tips are:
+
+    $16.54 (for a trip with a $70.00 fare and $6.94 in tolls)
+    $12.00 (for a similar fare/toll setup)
+    $5.00 (for a trip with $0.00 in tolls)
+    $4.13
+
+The Reality Check (MSE & R^2)
+It is also important to remember the evaluation metrics from your exercise. The optimal model (Depth 4) yielded an R^2 score of roughly 0.03 and an MSE of ~24.4. 
+This means that while the model will output an exact dollar amount (e.g., "$8.42"), human tipping behavior is so subjective and volatile that this exact prediction will likely have a margin of error of several dollars. The model provides the best statistical estimate based on the fare and distance, but it cannot perfectly predict the exact change a specific passenger will decide to leave.
+
+
